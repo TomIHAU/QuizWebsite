@@ -7,6 +7,7 @@ var ansBtn = document.querySelector(".ansBtn");
 var disScore = document.querySelector(".disScore");
 var disName = document.querySelector(".name");
 
+var highScores = [];
 var highScore;
 var score = 0;
 var newName;
@@ -84,14 +85,11 @@ function displayResult(){
   }
   if(score > highScore){
     highScore = score;
-    // you got the highscore 
-    // enter you name here
     localStorage.setItem("highScore", highScore)
     disHighScore.textContent = highScore;
     initialGen()
     localStorage.setItem("winnersName", newName)
     disName.textContent = newName;
-    // congrat message
     }
 };
 
@@ -103,15 +101,6 @@ function startTimer() {
       displayResult();
     }
   }, 1000);
-};
-
-function checkHighScore(){
-  if(score > highScore){
-    OldName = newName;
-    highScore = score;
-    localStorage.setItem("highScore", highScore);
-    localStorage.setItem("HSname", OldName);
-  }
 };
 
 function start(){
@@ -156,21 +145,41 @@ function pickAnswer(event){
       disScore.textContent = score;
     }else{
       answers.innerHTML = "";
-      question.textContent = "Incorrect..."
+      question.textContent = "Incorrect... -5 seconds"
       timerCounter = timerCounter - 5;
     }
-    //goes to next question
+    //goes to next question after delaying one sec
+    setTimeout(function(){
     i++;
     if(QAndA.length > i){
       answers.innerHTML= "";
-      //question.innerHTML="";
       askQuestions();
     } else {
       displayResult();
     }
+    },1000);
   }
 }
 
 init();
 startBtn.addEventListener("click", start)
 answers.addEventListener("click", pickAnswer)
+
+/*
+function setScores(){
+  newScore = score;
+  newName = //input name prompt
+  var tempObj = {scr: newScore, int: newName};
+  highScores = highScores.push(tempObj);
+  highScores = highScores.sort(function(a,b){return b.scr - a.scr})
+  highScores = highScores.slice(0, 5);
+}
+/*
+const points = [
+  {num:40, age: 10},
+  {num:50, age: 5},
+  {num:14, age: 13}];
+points.sort(function(a, b){return b.num-a.num});
+console.log(points);
+
+animals.slice(1, 5)
