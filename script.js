@@ -6,6 +6,7 @@ var answers = document.querySelector(".answers");
 var ansBtn = document.querySelector(".ansBtn");
 var disScore = document.querySelector(".disScore");
 var disName = document.querySelector(".name");
+var highBtn = document.querySelector(".highBtn")
 
 var highScores = [];
 var highScore;
@@ -13,6 +14,7 @@ var score = 0;
 var newName;
 var oldName;
 var i;
+
 // timer vars
 var timerCounter;
 var timerRun;
@@ -44,13 +46,13 @@ function init(){
   timer.textContent = 30;
   disScore.textContent = score;
 
-  var LShighScores = JSON.parse(localStorage.getItem("highScores"));
-  if(LShighScores == null){
+  highScores = JSON.parse(localStorage.getItem("highScores"));
+  if(highScores == null){
     highScore = 0;
     oldName = "AA"
   } else{
-    highScore = LShighScores[0].scr;
-    oldName = LShighScores[0].nam;
+    highScore = highScores[0].scr;
+    oldName = highScores[0].nam;
   }
   disHighScore.textContent = highScore;
   disName.textContent = oldName;
@@ -67,13 +69,14 @@ function setScores(){
       alert("you must enter up to three characters")
       setScores()
   }};
-
+  newName = newName.toUpperCase();
   var tempObj = {scr: newScore, nam: newName};
-  highScores = highScores.push(tempObj);
-  highScores = highScores.sort(function(a,b){return b.scr - a.scr})
-  highScores = highScores.slice(0, 5);
-  localStorage.setItem(JSON.stringify(highScores));
+  highScores.push(tempObj);
+  highScores.sort(function(a,b){return b.scr - a.scr})
+  highScores.slice(0, 5);
+  localStorage.setItem("highScores", JSON.stringify(highScores));
 };
+
 function displayResult(){
   clearInterval(timerRun);
   answers.innerHTML= "";
@@ -160,16 +163,17 @@ function pickAnswer(event){
   }
 }
 
+function highSList(){
+  answers.innerHTML = ""
+  for( let k = 0; k < highScores.length; k++){
+    question.textContent = "High Scores:"
+    var li = document.createElement("li");
+    li.textContent = highScores[k].nam + ": " + highScores[k].scr;
+    answers.appendChild(li);
+  };
+}
 init();
+
+highBtn.addEventListener("click", highSList)
 startBtn.addEventListener("click", start)
 answers.addEventListener("click", pickAnswer)
-
-/*
-const points = [
-  {num:40, age: 10},
-  {num:50, age: 5},
-  {num:14, age: 13}];
-points.sort(function(a, b){return b.num-a.num});
-console.log(points);
-
-animals.slice(1, 5)*/
