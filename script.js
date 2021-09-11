@@ -20,26 +20,26 @@ var timerCounter;
 var timerRun;
 // placeholder for questions
 var QAndA =[{
-  question: "q1",
+  question: "What are the main colors on the flag of Spain?",
   answers:[
-    {isRight:false, ans:"a1"},
-    {isRight:false, ans:"a2"},
-    {isRight:false, ans:"a3"},
-    {isRight:true, ans:"a4"}]
+    {isRight:false, ans:"Black and yellow"},
+    {isRight:false, ans:"Green and white"},
+    {isRight:false, ans:"Blue and white"},
+    {isRight:true, ans:"Red and yellow"}]
 },
-  {question: "q2",
+  {question: "Which of these animals does NOT appear in the Chinese zodiac?",
   answers:[
-    {isRight:false, ans:"a1"},
-    {isRight:false, ans:"a2"},
-    {isRight:false, ans:"a3"},
-    {isRight:true, ans:"a4"}]
+    {isRight:false, ans:"Rabbit"},
+    {isRight:true, ans:"Bear"},
+    {isRight:false, ans:"Dragon"},
+    {isRight:false, ans:"Dog"}]
 },
-  {question: "q3",
+  {question: "In darts, what's the most points you can score with a single throw?",
   answers:[
-    {isRight:false, ans:"a1"},
-    {isRight:false, ans:"a2"},
-    {isRight:false, ans:"a3"},
-    {isRight:true, ans:"a4"}]
+    {isRight:false, ans:"20"},
+    {isRight:false, ans:"80"},
+    {isRight:true, ans:"60"},
+    {isRight:false, ans:"50"}]
 }];
 
 function init(){
@@ -83,6 +83,7 @@ function displayResult(){
   timer.textContent = 0;
   
   startBtn.disabled = false;
+  highBtn.disabled = false;
   if (score == 0){
     question.textContent = "You didn't get any questions right!";
     answers.textContent = "Try harder next time";
@@ -112,6 +113,7 @@ function start(){
   disScore.textContent = score;
   timerCounter = 30;
   startBtn.disabled = true;
+  highBtn.disabled = true;
   askQuestions();
   startTimer();
 };
@@ -166,7 +168,7 @@ function pickAnswer(event){
 function highSList(){
   answers.innerHTML = ""
   for( let k = 0; k < highScores.length; k++){
-    question.textContent = "High Scores:"
+    question.textContent = "Top 5 High Scores:"
     var li = document.createElement("li");
     li.textContent = highScores[k].nam + ": " + highScores[k].scr;
     answers.appendChild(li);
