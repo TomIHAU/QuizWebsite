@@ -1,7 +1,9 @@
 var timer = document.querySelector(".timer");
 var question = document.querySelector(".question");
 var startBtn = document.querySelector(".startBtn");
-var highScore = document.querySelector(".highScore")
+var highScore = document.querySelector(".highScore");
+var answers = document.querySelector(".answers");
+
 
 var score;
 var newName;
@@ -36,7 +38,11 @@ var QAndA =[{
 
 
 function displayResult(){
+  //you score is !
+
   if(score > highScore){
+    // you got the highscore 
+    // enter you name here
     localStorage.setItem("highScore", highScore)
     // congrat message
     }
@@ -47,6 +53,7 @@ function startTimer() {
       timerCounter--;
       timer.textContent = timerCounter;
       if (timerCounter === 0) {
+        displayResult();
         clearInterval(timerRun);
       }
     }, 1000);
@@ -68,28 +75,28 @@ function start(){
     startTimer();
 };
 
-startBtn.addEventListener("click", start)
-button.addEventListener("click", pickAnswer)
-
 function askQuestions(){
   let i = 0;
   question.textContent = QAndA[i].question;
     
   for( let j = 0; j < QAndA[i].answers.length; j++){
+    
     var li = document.createElement("li");
     li.textContent = QAndA[i].answers[j].ans;
     li.setAttribute("data-index", j);
+
     var button = document.createElement("button");
     button.textContent = "Pick me?";
+
     li.appendChild(button);
-    todoList.appendChild(li);
+    answers.appendChild(li);
   };
 };
 
 function pickAnswer(){
-  
-  if (QAndA[i].answer[j].isRight){
-    
+  let pick = getAttribute("data-index")
+  if (QAndA[i].answer[pick].isRight){
+    //display correct
     score = score + 10;
   }else{
     //display incorrect
@@ -102,3 +109,6 @@ function pickAnswer(){
     displayResult();
   }
 }
+
+startBtn.addEventListener("click", start)
+button.addEventListener("click", pickAnswer)
