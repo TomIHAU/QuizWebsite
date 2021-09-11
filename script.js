@@ -8,7 +8,7 @@ var disScore = document.querySelector(".disScore");
 var disName = document.querySelector(".name");
 
 var highScore;
-var score;
+var score = 0;
 var newName;
 var oldName;
 var i;
@@ -41,7 +41,8 @@ var QAndA =[{
 
 function init(){
   timer.textContent = 30;
-  i = 0;
+  disScore.textContent = score;
+
   var winnersName = localStorage.getItem("winnersName");
   if(winnersName == null){
     oldName = "AA"
@@ -58,16 +59,38 @@ function init(){
   }
   disHighScore.textContent = highScore;
 }
-
+function initialGen(){
+  newName = prompt("congratulations you got a high score!", "enter your initials here");
+  if (newName.length > 3){
+  alert("you must enter up to three characters")
+  initialGen()
+  }
+  newName = newName.toUpperCase();
+  return newName;
+} 
 
 function displayResult(){
-  //you score is !
+  clearInterval(timerRun);
+  answers.innerHTML= "";
+  timer.textContent = 0;
+  
   startBtn.disabled = false;
+  if (score == 0){
+    question.textContent = "You didn't get any questions right!";
+    answers.textContent = "Try harder next time";
+  } else {
+    question.textContent = "congratulations!";
+  answers.textContent = "Your score is " + score;
+  }
   if(score > highScore){
+    highScore = score;
     // you got the highscore 
     // enter you name here
     localStorage.setItem("highScore", highScore)
+    disHighScore.textContent = highScore;
+    initialGen()
     localStorage.setItem("winnersName", newName)
+    disName.textContent = newName;
     // congrat message
     }
 };
@@ -76,9 +99,7 @@ function startTimer() {
   timerRun = setInterval(function() {
     timerCounter--;
     timer.textContent = timerCounter;
-    if (timerCounter === 0) {
-      clearInterval(timerRun);
-      answers.innerHTML= "";
+    if (timerCounter <= 0) {
       displayResult();
     }
   }, 1000);
@@ -94,10 +115,14 @@ function checkHighScore(){
 };
 
 function start(){
-    timerCounter = 30;
-    startBtn.disabled = true;
-    askQuestions();
-    startTimer();
+  answers.textContent= "";
+  i = 0;
+  score = 0;
+  disScore.textContent = score;
+  timerCounter = 30;
+  startBtn.disabled = true;
+  askQuestions();
+  startTimer();
 };
 
 function askQuestions(){
@@ -127,14 +152,16 @@ function pickAnswer(event){
     if (QAndA[i].answers[pick].isRight){
       answers.innerHTML = "";
       question.textContent = "Correct!"
-      score = score + timerRun;
+      score = score + timerCounter;
+      disScore.textContent = score;
     }else{
       answers.innerHTML = "";
       question.textContent = "Incorrect..."
       timerCounter = timerCounter - 5;
     }
+    //goes to next question
     i++;
-    if(QAndA.length < i){
+    if(QAndA.length > i){
       answers.innerHTML= "";
       //question.innerHTML="";
       askQuestions();
@@ -147,4 +174,3 @@ function pickAnswer(event){
 init();
 startBtn.addEventListener("click", start)
 answers.addEventListener("click", pickAnswer)
-console.log("this worked")
