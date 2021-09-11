@@ -44,32 +44,36 @@ function init(){
   timer.textContent = 30;
   disScore.textContent = score;
 
-  var winnersName = localStorage.getItem("winnersName");
-  if(winnersName == null){
-    oldName = "AA"
-  } else {
-    oldName = winnersName;
-  }
-  disName.textContent = oldName;
-
-  var LShighScore = localStorage.getItem("highScore");
-  if(LShighScore == null){
+  var LShighScores = JSON.parse(localStorage.getItem("highScores"));
+  if(LShighScores == null){
     highScore = 0;
+    oldName = "AA"
   } else{
-    highScore = LShighScore;
+    highScore = LShighScores[0].scr;
+    oldName = LShighScores[0].nam;
   }
   disHighScore.textContent = highScore;
+  disName.textContent = oldName;
 }
-function initialGen(){
-  newName = prompt("congratulations you got a high score!", "enter your initials here");
-  if (newName.length > 3){
-  alert("you must enter up to three characters")
-  initialGen()
-  }
-  newName = newName.toUpperCase();
-  return newName;
-} 
 
+function setScores(){
+  newScore = score;
+  var save = confirm("would you like to save your score?")
+  if (!save){
+    return;
+  }else{
+    newName  = prompt("congratulations you got a high score!", "enter your initials here");
+    if (newName.length > 3){
+      alert("you must enter up to three characters")
+      setScores()
+  }};
+
+  var tempObj = {scr: newScore, nam: newName};
+  highScores = highScores.push(tempObj);
+  highScores = highScores.sort(function(a,b){return b.scr - a.scr})
+  highScores = highScores.slice(0, 5);
+  localStorage.setItem(JSON.stringify(highScores));
+};
 function displayResult(){
   clearInterval(timerRun);
   answers.innerHTML= "";
@@ -83,15 +87,10 @@ function displayResult(){
     question.textContent = "congratulations!";
   answers.textContent = "Your score is " + score;
   }
-  if(score > highScore){
-    highScore = score;
-    localStorage.setItem("highScore", highScore)
-    disHighScore.textContent = highScore;
-    initialGen()
-    localStorage.setItem("winnersName", newName)
-    disName.textContent = newName;
-    }
-};
+  setScores();
+  disHighScore.textContent = highScores[0].scr;
+  disName.textContent = highScores[0].nam;
+  };
 
 function startTimer() {
   timerRun = setInterval(function() {
@@ -166,15 +165,6 @@ startBtn.addEventListener("click", start)
 answers.addEventListener("click", pickAnswer)
 
 /*
-function setScores(){
-  newScore = score;
-  newName = //input name prompt
-  var tempObj = {scr: newScore, int: newName};
-  highScores = highScores.push(tempObj);
-  highScores = highScores.sort(function(a,b){return b.scr - a.scr})
-  highScores = highScores.slice(0, 5);
-}
-/*
 const points = [
   {num:40, age: 10},
   {num:50, age: 5},
@@ -182,4 +172,4 @@ const points = [
 points.sort(function(a, b){return b.num-a.num});
 console.log(points);
 
-animals.slice(1, 5)
+animals.slice(1, 5)*/
