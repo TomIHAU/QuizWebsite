@@ -10,23 +10,30 @@
 
   <body>
     <header>
-      <div>
-        <h4>highscore:<span class="disHighScore"></span></h4>
-        <h4>score:<span class="disScore"></span></h4>
-        <h4>timer:<span class="timer"></span></h4>
+      <div class="scores">
+        <div>
+          <h4>high scorers initials: <span class="name"></span></h4>
+          <h4>highscore: <span class="disHighScore"></span></h4>
+        </div>
+        <div>
+          <h4>timer: <span class="timer"></span></h4>
+          <h4>score: <span class="disScore"></span></h4>
+        </div>
       </div>
       <h2>Javascript Quiz.</h2>
-      <button class="startBtn">Start!</button>
+      <div class="startCenter"><button class="startBtn">Start!</button></div>
     </header>
 
     <main>
       <div>
         <h3 class="question"></h3>
-        <ol class="answers"></ol>
+        <ul class="answers"></ul>
       </div>
     </main>
 
-    <footer>Made by Tom H.</footer>
+    <footer>
+      <h3>Made by Tom Haywood, Thanks for visiting!</h3>
+    </footer>
     <script src="script.js"></script>
   </body>
 </html>

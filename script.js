@@ -3,14 +3,15 @@ var question = document.querySelector(".question");
 var startBtn = document.querySelector(".startBtn");
 var disHighScore = document.querySelector(".disHighScore");
 var answers = document.querySelector(".answers");
-var ansBtn = document.querySelector(".ansBtn")
-var disScore = document.querySelector(".disScore")
+var ansBtn = document.querySelector(".ansBtn");
+var disScore = document.querySelector(".disScore");
+var disName = document.querySelector(".name");
 
 var highScore;
 var score;
 var newName;
-var OldName;
-
+var oldName;
+var i;
 // timer vars
 var timerCounter;
 var timerRun;
@@ -38,6 +39,26 @@ var QAndA =[{
     {isRight:true, ans:"a4"}]
 }];
 
+function init(){
+  timer.textContent = 30;
+  i = 0;
+  var winnersName = localStorage.getItem("winnersName");
+  if(winnersName == null){
+    oldName = "AA"
+  } else {
+    oldName = winnersName;
+  }
+  disName.textContent = oldName;
+
+  var LShighScore = localStorage.getItem("highScore");
+  if(LShighScore == null){
+    highScore = 0;
+  } else{
+    highScore = LShighScore;
+  }
+  disHighScore.textContent = highScore;
+}
+
 
 function displayResult(){
   //you score is !
@@ -46,6 +67,7 @@ function displayResult(){
     // you got the highscore 
     // enter you name here
     localStorage.setItem("highScore", highScore)
+    localStorage.setItem("winnersName", newName)
     // congrat message
     }
 };
@@ -72,7 +94,6 @@ function checkHighScore(){
 };
 
 function start(){
-
     timerCounter = 30;
     startBtn.disabled = true;
     askQuestions();
@@ -80,7 +101,6 @@ function start(){
 };
 
 function askQuestions(){
-  let i = 0;
   question.textContent = QAndA[i].question;
     
   for( let j = 0; j < QAndA[i].answers.length; j++){
@@ -98,30 +118,33 @@ function askQuestions(){
   };
 };
 
-function pickAnswer(){
+function pickAnswer(event){
+  
+  var element = event.target;
+    if(element.matches(".ansBtn")){    
+    let pick = element.parentElement.getAttribute("data-index")
 
-  answers.innerHTML= "";
-  let pick = element.parentElement.getAttribute("data-index")
-  if (QAndA[i].answer[pick].isRight){
-    answers.innerHTML = "";
-    question.textContent = "Correct!"
-    score = score + timerRun;
-  }else{
-    answers.innerHTML = "";
-    question.textContent = "Incorrect..."
-    timerCounter = timerCounter - 5;
-  }
-
-  i++;
-  if(QAndA.length < i){
-    answers.innerHTML= "";
-    //question.innerHTML="";
-    askQuestions();
-  } else {
-    displayResult();
+    if (QAndA[i].answers[pick].isRight){
+      answers.innerHTML = "";
+      question.textContent = "Correct!"
+      score = score + timerRun;
+    }else{
+      answers.innerHTML = "";
+      question.textContent = "Incorrect..."
+      timerCounter = timerCounter - 5;
+    }
+    i++;
+    if(QAndA.length < i){
+      answers.innerHTML= "";
+      //question.innerHTML="";
+      askQuestions();
+    } else {
+      displayResult();
+    }
   }
 }
 
-
+init();
 startBtn.addEventListener("click", start)
-ansBtn.addEventListener("click", pickAnswer)
+answers.addEventListener("click", pickAnswer)
+console.log("this worked")
