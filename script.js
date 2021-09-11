@@ -1,10 +1,12 @@
 var timer = document.querySelector(".timer");
 var question = document.querySelector(".question");
 var startBtn = document.querySelector(".startBtn");
-var highScore = document.querySelector(".highScore");
+var disHighScore = document.querySelector(".disHighScore");
 var answers = document.querySelector(".answers");
+var ansBtn = document.querySelector(".ansBtn")
+var disScore = document.querySelector(".disScore")
 
-
+var highScore;
 var score;
 var newName;
 var OldName;
@@ -19,27 +21,27 @@ var QAndA =[{
     {isRight:false, ans:"a1"},
     {isRight:false, ans:"a2"},
     {isRight:false, ans:"a3"},
-    {isRight:true, and:"a4"}]
+    {isRight:true, ans:"a4"}]
 },
   {question: "q2",
   answers:[
     {isRight:false, ans:"a1"},
     {isRight:false, ans:"a2"},
     {isRight:false, ans:"a3"},
-    {isRight:true, and:"a4"}]
+    {isRight:true, ans:"a4"}]
 },
   {question: "q3",
   answers:[
     {isRight:false, ans:"a1"},
     {isRight:false, ans:"a2"},
     {isRight:false, ans:"a3"},
-    {isRight:true, and:"a4"}]
+    {isRight:true, ans:"a4"}]
 }];
 
 
 function displayResult(){
   //you score is !
-
+  startBtn.disabled = false;
   if(score > highScore){
     // you got the highscore 
     // enter you name here
@@ -49,14 +51,15 @@ function displayResult(){
 };
 
 function startTimer() {
-    timerRun = setInterval(function() {
-      timerCounter--;
-      timer.textContent = timerCounter;
-      if (timerCounter === 0) {
-        displayResult();
-        clearInterval(timerRun);
-      }
-    }, 1000);
+  timerRun = setInterval(function() {
+    timerCounter--;
+    timer.textContent = timerCounter;
+    if (timerCounter === 0) {
+      clearInterval(timerRun);
+      answers.innerHTML= "";
+      displayResult();
+    }
+  }, 1000);
 };
 
 function checkHighScore(){
@@ -69,8 +72,9 @@ function checkHighScore(){
 };
 
 function start(){
-    timerCounter = 30;
 
+    timerCounter = 30;
+    startBtn.disabled = true;
     askQuestions();
     startTimer();
 };
@@ -87,6 +91,7 @@ function askQuestions(){
 
     var button = document.createElement("button");
     button.textContent = "Pick me?";
+    button.setAttribute("class", "ansBtn")
 
     li.appendChild(button);
     answers.appendChild(li);
@@ -94,21 +99,29 @@ function askQuestions(){
 };
 
 function pickAnswer(){
-  let pick = getAttribute("data-index")
+
+  answers.innerHTML= "";
+  let pick = element.parentElement.getAttribute("data-index")
   if (QAndA[i].answer[pick].isRight){
-    //display correct
-    score = score + 10;
+    answers.innerHTML = "";
+    question.textContent = "Correct!"
+    score = score + timerRun;
   }else{
-    //display incorrect
+    answers.innerHTML = "";
+    question.textContent = "Incorrect..."
     timerCounter = timerCounter - 5;
   }
+
   i++;
   if(QAndA.length < i){
+    answers.innerHTML= "";
+    //question.innerHTML="";
     askQuestions();
   } else {
     displayResult();
   }
 }
 
+
 startBtn.addEventListener("click", start)
-button.addEventListener("click", pickAnswer)
+ansBtn.addEventListener("click", pickAnswer)
