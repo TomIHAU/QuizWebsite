@@ -81,10 +81,9 @@ function displayResult(){
   clearInterval(timerRun);
   answers.innerHTML= "";
   timer.textContent = 0;
-  
   startBtn.disabled = false;
   highBtn.disabled = false;
-  if (score == 0){
+  if (score === 0){
     question.textContent = "You didn't get any questions right!";
     answers.textContent = "Try harder next time";
   } else {
