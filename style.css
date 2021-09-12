@@ -1,6 +1,6 @@
 * {
-  background-color: rgb(194, 194, 194);
-  color: darkred;
+  background-color: rgb(255, 236, 221);
+  color: black;
 }
 body {
   height: 100%;
@@ -42,9 +42,13 @@ footer {
   padding: 4px 8px;
   background-color: blue;
   color: bisque;
+  opacity: 0.8;
 }
 .intBtn:disabled {
   opacity: 0.5;
 }
 .ansBtn {
+  margin-left: 10px;
+  cursor: pointer;
+  padding: 3px 5px;
 }
