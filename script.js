@@ -73,7 +73,7 @@ function setScores(){
   var tempObj = {scr: newScore, nam: newName};
   highScores.push(tempObj);
   highScores.sort(function(a,b){return b.scr - a.scr})
-  highScores.slice(0, 5);
+  highScores = highScores.slice(0, 5);
   localStorage.setItem("highScores", JSON.stringify(highScores));
 };
 
