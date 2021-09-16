@@ -46,11 +46,12 @@ function init(){
   timer.textContent = 30;
   disScore.textContent = score;
 
-  highScores = JSON.parse(localStorage.getItem("highScores"));
-  if(highScores == null){
+  var tempHighScores = JSON.parse(localStorage.getItem("highScores"));
+  if(tempHighScores === null){
     highScore = 0;
     oldName = "AA"
   } else{
+    highScores = JSON.parse(localStorage.getItem("highScores"));
     highScore = highScores[0].scr;
     oldName = highScores[0].nam;
   }
