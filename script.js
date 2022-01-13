@@ -73,7 +73,7 @@ function setScores() {
     return;
   } else {
     newName = prompt(
-      "congratulations you got a high score!",
+      "Congratulations you got a high score!",
       "enter your initials here"
     );
     if (newName.length > 3) {
@@ -101,8 +101,7 @@ function displayResult() {
     question.textContent = "You didn't get any questions right!";
     answers.textContent = "Try harder next time";
   } else {
-    question.textContent = "congratulations!";
-    answers.textContent = "Your score is " + score;
+    question.textContent = `Congratulations! Your score is ${score}`;
   }
   setScores();
   disHighScore.textContent = highScores[0].scr;
