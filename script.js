@@ -15,10 +15,9 @@ let newName;
 let oldName;
 let i;
 
-// timer lets
 let timerCounter;
 let timerRun;
-// placeholder for questions
+
 const QAndA = [
   {
     question: "What are the main colors on the flag of Spain?",
@@ -137,13 +136,16 @@ function askQuestions() {
 
   for (let j = 0; j < QAndA[i].answers.length; j++) {
     let li = document.createElement("li");
-    li.textContent = QAndA[i].answers[j].ans;
     li.setAttribute("data-index", j);
+
+    let text = document.createElement("p");
+    text.textContent = QAndA[i].answers[j].ans;
 
     let button = document.createElement("button");
     button.textContent = "Pick me?";
     button.setAttribute("class", "ansBtn");
 
+    li.appendChild(text);
     li.appendChild(button);
     answers.appendChild(li);
   }
@@ -178,12 +180,12 @@ function pickAnswer(event) {
 
 function highSList() {
   answers.innerHTML = "";
-  for (let k = 0; k < highScores.length; k++) {
-    question.textContent = "Top 5 High Scores:";
+  question.textContent = "Top 5 High Scores:";
+  highScores.map((score) => {
     let li = document.createElement("li");
-    li.textContent = `${highScores[k].nam}: ${highScores[k].scr}`;
+    li.textContent = `${score.nam}: ${score.scr}`;
     answers.appendChild(li);
-  }
+  });
 }
 init();
 

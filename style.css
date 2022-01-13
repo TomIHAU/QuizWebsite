@@ -1,6 +1,6 @@
 * {
-  background-color: rgb(255, 236, 221);
-  color: black;
+  background-color: #cbbaa8;
+  color: #2e3b51;
 }
 body {
   height: 100%;
@@ -8,8 +8,11 @@ body {
 }
 .scores {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   padding: 15px;
+}
+.info div {
+  padding: 3px;
 }
 .startCenter {
   text-align: center;
@@ -17,8 +20,11 @@ body {
 main {
   text-align: center;
 }
+p {
+  text-align: center;
+}
 ul {
-  padding: 0;
+  padding: 0 20%;
   list-style-type: none;
 }
 h4 {
@@ -39,10 +45,11 @@ footer {
   border: none;
   cursor: pointer;
   margin: 4px;
-  padding: 4px 8px;
-  background-color: blue;
-  color: bisque;
-  opacity: 0.8;
+  padding: 8px 8px;
+  background-color: #2f5391;
+  color: #e9e9e9;
+  opacity: 1;
+  width: 140px;
 }
 .intBtn:disabled {
   opacity: 0.5;
@@ -51,4 +58,9 @@ footer {
   margin-left: 10px;
   cursor: pointer;
   padding: 3px 5px;
+}
+li {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
