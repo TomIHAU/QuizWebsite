@@ -2,7 +2,7 @@
 
 # link to deployed app.
 
-https://tomihau.github.io/week4homework/
+https://tomihau.github.io/QuizWebsite/
 
 ## description
 
